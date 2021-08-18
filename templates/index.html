@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Store</title>
-</head>
-<body>
-    <h1>Welcome to the best webstore</h1>
+{% extends 'base.html' %} <!--take all from base.html-->
 
-</body>
-</html>
+{% block title %}
+<title>Store</title>
+{% endblock %}
+
+{% block body %}
+<h1>Welcome here</h1>
+{% endblock %}
