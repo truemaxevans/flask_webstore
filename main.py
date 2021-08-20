@@ -3,11 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mystore.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
 class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)  # auto +1
     title = db.Column(db.String(20), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text)
