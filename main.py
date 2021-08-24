@@ -53,9 +53,3 @@ def create():
 if __name__ == '__main__':
     app.run(debug=True)
 # when upload on server set False
-
-
-
-
-
-
