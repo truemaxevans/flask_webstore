@@ -1,0 +1,17 @@
+{% extends 'base.html' %} <!--take all from base.html-->
+
+{% block title %}
+<title>Registration page</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>New user</h1>
+    <form method="post">
+        <!--entry data from user-->
+        <input type="text" class="'form-control" name="username" id="title" placeholder="Username">
+        <input type="number" class="'form-control" name="password" id="price" placeholder="Password">
+        <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

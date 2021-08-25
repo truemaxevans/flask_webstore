@@ -17,6 +17,9 @@ class User(db.Model):
     name = db.Column(db.Unicode(100))
     password = db.Column(db.Integer, nullable=False)
 
+    def __repr__(self):
+        return self.name
+
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # auto +1
@@ -59,6 +62,22 @@ def create():
 
     else:
         return render_template('create.html')
+
+
+@app.route('/registration', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = User(username=username, password=password)
+
+        try:
+            db.session.add(user)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'Error'
 
 
 admin.add_view(ModelView(User, db.session))
