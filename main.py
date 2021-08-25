@@ -77,6 +77,8 @@ def register():
             return redirect('/')
         except:
             return 'Error, try again'
+    else:
+        return render_template('registration.html')
 
 
 admin.add_view(ModelView(User, db.session))
