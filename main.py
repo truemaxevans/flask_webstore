@@ -14,11 +14,11 @@ admin = Admin(app, name='Admin', template_mode='bootstrap3')
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20))
-    password = db.Column(db.Unicode(100))
+    username = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.Unicode(100), nullable=False)
 
     def __repr__(self):
-        return self.name
+        return self.username
 
 
 class Product(db.Model):
@@ -71,13 +71,12 @@ def register():
         password = request.form['password']
 
         user = User(username=username, password=password)
-
         try:
             db.session.add(user)
             db.session.commit()
-            return redirect('/registration')
+            return redirect('/')
         except:
-            return 'Error'
+            return 'Error, try again'
 
 
 admin.add_view(ModelView(User, db.session))
