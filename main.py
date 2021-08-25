@@ -14,8 +14,8 @@ admin = Admin(app, name='Admin', template_mode='bootstrap3')
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Unicode(100))
-    password = db.Column(db.Integer, nullable=False)
+    username = db.Column(db.String(20))
+    password = db.Column(db.Unicode(100))
 
     def __repr__(self):
         return self.name
@@ -75,7 +75,7 @@ def register():
         try:
             db.session.add(user)
             db.session.commit()
-            return redirect('/')
+            return redirect('/registration')
         except:
             return 'Error'
 
