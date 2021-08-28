@@ -2,23 +2,29 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-
+from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mystore.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = 'mysecret'
+app.config["SECRET_KEY"] = 'secret'
+app.config["CSRF_ENABLED"] = True
+app.config["USER_ENABLE_EMAIL"] = False
+
 db = SQLAlchemy(app)
+
 admin = Admin(app, name='Admin', template_mode='bootstrap3')
+# Flask users
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False)
-    password = db.Column(db.Unicode(100), nullable=False)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(255), nullable=False, server_default='')
+    active = db.Column(db.Boolean(), nullable=False, server_default='0')
 
-    def __repr__(self):
-        return self.username
+
+user_manager = UserManager(app, db, User)
 
 
 class Product(db.Model):
@@ -46,6 +52,7 @@ def about():
 
 
 @app.route('/add_product', methods=['POST', 'GET'])
+@login_required
 def create():
     if request.method == 'POST':
         title = request.form['title']
